@@ -1,0 +1,21 @@
+MODCOM Architecture
+
+Transmitter
+- Arduino UNO
+- NRF24L01+
+- OLED
+- Joysticks
+- Buttons
+- Encoder
+
+↓
+
+Wireless Link
+
+↓
+
+Receiver
+- STM32 Blue Pill
+- NRF24L01+
+- MPU6050
+- PWM Outputs
