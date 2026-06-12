@@ -1,300 +1,211 @@
-# ModCom
-📘 PROJECT REPORT
+# MODCOM – Modular Communication & Control Platform
 
-Project Title
+## Overview
 
-MODCOM: A Modular, Low-Cost RF Control Platform for Hands-On Embedded Systems Education
+MODCOM (Modular Communication & Control Platform) is a low-cost, modular, and scalable wireless communication and control system designed for education, embedded systems development, robotics, UAV experimentation, industrial monitoring, and research prototypes.
 
+The project aims to provide a practical platform for learning RF communication, control systems, telemetry, embedded firmware development, hardware design, and system architecture while maintaining affordability and modularity.
 
----
-
-Team Name
-
-MODCOM
-
+Unlike traditional transmitter-receiver systems that are designed for a single application, MODCOM is built around a universal transmitter architecture capable of communicating with multiple uniquely addressed receivers, enabling a single control platform to operate different projects such as robotic vehicles, UAVs, automation systems, sensor nodes, and future research platforms.
 
 ---
 
-Track
+## Key Features
 
-Hardware Track
-SDG 4 – Quality Education
-
-
----
-
-1. Abstract
-
-MODCOM is a modular, low-cost RF-based transmitter–receiver platform designed to enable hands-on learning of embedded systems, wireless communication, and real-time control. The system consists of an Arduino UNO–based transmitter and an STM32F103 (Blue Pill)–based receiver, connected via long-range NRF24L01 PA+LNA modules. The project emphasizes modularity, precision control, safety, and reusability by incorporating a standardized 2S 18650 battery pack with BMS protection and a self-built high-precision joystick mechanism. By keeping the total system cost below ₹5,000, MODCOM makes advanced hardware concepts accessible to students, educators, and hobbyists, directly supporting Sustainable Development Goal 4 (Quality Education).
-
-
----
-
-2. Motivation and Problem Statement
-
-Practical education in wireless control systems, embedded firmware, and real-time hardware design is often limited by:
-
-High cost of commercial RC transmitters and receivers
-
-Closed-source, non-modular systems
-
-Poor exposure to real-world RF communication and control loops
-
-Lack of reusable and standardized power systems across projects
-
-
-As a result, students rarely gain hands-on experience with professional-grade embedded architectures, sensor integration, and system-level design.
-
+* NRF24L01+ PA+LNA long-range wireless communication
+* Arduino UNO based transmitter platform
+* STM32F103C8T6 (Blue Pill) receiver architecture
+* 8-channel control system
+* OLED-based user interface
+* Receiver selection and addressing system
+* Real-time telemetry display
+* Modular battery architecture
+* Expandable firmware architecture
+* Future encryption support
+* Future multi-receiver networking support
+* PID control and stabilization roadmap
 
 ---
 
-3. Proposed Solution
+## System Architecture
 
-MODCOM addresses these challenges through a modular and educational hardware platform that offers:
+### Transmitter
 
-One transmitter controlling multiple receivers
+Hardware:
 
-Long-range RF communication using NRF24L01 PA+LNA
+* Arduino UNO
+* NRF24L01+ PA+LNA Module
+* 0.96" SSD1306 SPI OLED Display
+* Dual Precision Gimbal Joysticks
+* 8 Trim Buttons
+* 2 Auxiliary B10K Potentiometers
+* 2 Three-Position Switches
+* Rotary Encoder with Push Button
+* 2S Li-Ion Battery Pack
 
-Precision control via self-built gimbal-style joysticks
+Functions:
 
-Real-time stabilization using an IMU and STM32 microcontroller
-
-A reusable, standardized battery system across projects
-
-Open, extensible, and repairable hardware design
-
-
-The system is designed to be both instructional and practical, suitable for labs, workshops, and prototyping environments.
-
-
----
-
-4. System Architecture Overview
-
-4.1 Transmitter Unit (Arduino UNO)
-
-The transmitter is responsible for user interaction and command generation.
-
-Key components:
-
-Arduino UNO microcontroller
-
-Two DIY precision joysticks (Yaw + Throttle, Roll + Pitch)
-
-Auxiliary tuning potentiometers
-
-Trim buttons for fine control
-
-Rotary encoder and OLED display for menu navigation
-
-3-way toggle switches for mode selection
-
-NRF24L01 PA+LNA RF module
-
-Modular 2S 18650 battery pack with BMS
-
-
-The transmitter handles input acquisition, user interface logic, packet formation, and RF transmission.
-
+* Control signal generation
+* Menu navigation
+* Receiver selection
+* Telemetry visualization
+* Configuration management
 
 ---
 
-4.2 Receiver Unit (STM32F103 Blue Pill)
+### Receiver
 
-The receiver is responsible for real-time control and stabilization.
+Hardware:
 
-Key components:
+* STM32F103C8T6 (Blue Pill)
+* NRF24L01+ PA+LNA Module
+* MPU6050 6-Axis IMU
+* PWM Outputs
+* Power Regulation Circuitry
+* 2S Li-Ion Battery Interface
 
-STM32F103C8T6 (Blue Pill) microcontroller
+Functions:
 
-NRF24L01 PA+LNA RF module
-
-MPU6050 IMU (gyroscope + accelerometer)
-
-Hardware PWM outputs for actuators
-
-Dedicated power regulation and failsafe logic
-
-Modular 2S 18650 battery pack with BMS
-
-
-The receiver processes incoming control data, performs sensor fusion and PID stabilization, and generates precise PWM signals.
-
+* Wireless packet reception
+* Sensor acquisition
+* Telemetry generation
+* PWM output generation
+* Future stabilization algorithms
 
 ---
 
-5. Communication Architecture
+## Receiver Addressing System
 
-Communication between transmitter and receiver uses structured RF packets:
+One of the primary goals of MODCOM is universal control.
 
-[Receiver ID | Control Channels | Trim Data | Mode Flags | Telemetry | Checksum]
+Each receiver is assigned a unique ID.
 
-Each receiver has a unique ID
+Example:
 
-Only the addressed receiver responds
+Receiver 001 → UAV Platform
 
-Prevents cross-interference
+Receiver 002 → Ground Rover
 
-Supports scalability and multi-device control
+Receiver 003 → Robotic Arm
 
+Receiver 004 → Sensor Station
 
+The transmitter can select and connect to different receivers through an onboard menu system using the rotary encoder interface.
 
----
-
-6. Precision Control Design
-
-6.1 DIY Precision Joystick
-
-Instead of low-cost joystick modules, MODCOM uses a self-built gimbal-style joystick, inspired by professional RC transmitters. Each axis uses a 10kΩ linear potentiometer, providing:
-
-Better centering accuracy
-
-Higher mechanical resolution
-
-Adjustable tension
-
-Easy repair and calibration
-
-
-This design also enhances educational value by combining mechanical and electronic learning.
-
+This architecture allows a single transmitter to be reused across multiple projects.
 
 ---
 
-6.2 Trims and Auxiliary Controls
+## Telemetry System
 
-Trim buttons allow fine adjustment of joystick centers
+Future versions of MODCOM will support:
 
-Auxiliary potentiometers allow real-time sensitivity and gain tuning
+* Battery Voltage Monitoring
+* IMU Status
+* Signal Quality Monitoring
+* Receiver Health Monitoring
+* Sensor Data Streaming
+* Custom Telemetry Packets
 
-All adjustments can be visualized and modified via the OLED interface
-
-
-
----
-
-7. Stability and Control System
-
-The receiver integrates an MPU6050 IMU for stabilization:
-
-Roll, pitch, and yaw data acquisition
-
-PID-based control loop running on STM32 hardware timers
-
-Adjustable PID parameters from the transmitter
-
-Option to enable or disable stabilization dynamically
-
-
-This demonstrates real-world control theory implementation.
-
+Telemetry information will be displayed directly on the OLED interface and may later be expanded to external monitoring dashboards.
 
 ---
 
-8. Modular Battery System
+## Power System
 
-A key design innovation in MODCOM is the standardized modular battery system:
+The platform utilizes a modular 2S lithium-ion battery architecture:
 
-2× 18650 Li-ion cells (2S configuration)
+* 2 × 18650 Li-Ion Cells
+* 2S BMS Protection Circuit
+* Modular Docking Interface
+* Dedicated Buck Converters
+* 3.3V RF Power Regulation
+* Decoupling Network for RF Stability
 
-2S BMS for overcharge, over-discharge, and short-circuit protection
-
-Custom connector and 3D-printed battery enclosure
-
-Universal dock design for reuse across multiple projects
-
-
-This reduces cost, improves safety, and supports sustainable hardware practices.
-
+This design allows battery packs to be reused across future projects while simplifying charging and maintenance.
 
 ---
 
-9. Safety and Reliability Considerations
+## Applications
 
-Dedicated 3.3V regulation for RF modules
+MODCOM is being developed as a reusable platform for:
 
-Bulk and bypass capacitors to prevent voltage dips
-
-Failsafe logic on signal loss (neutral controls, throttle cut)
-
-Physical power switches for safe operation
-
-Modular wiring and protected enclosures
-
-
-
----
-
-10. SDG Alignment – SDG 4: Quality Education
-
-MODCOM directly contributes to SDG 4 by:
-
-Making advanced embedded systems affordable
-
-Enabling hands-on RF, control, and firmware learning
-
-Encouraging open-source, modular hardware design
-
-Supporting experimentation, repair, and reuse
-
-Reducing dependency on expensive proprietary platforms
-
-
+* UAV Systems
+* Robotics
+* Educational Laboratories
+* Industrial Monitoring
+* Remote Sensing
+* Research Prototypes
+* Autonomous Vehicles
+* Formula Student Telemetry Systems
+* Embedded Systems Training
 
 ---
 
-11. Cost Analysis
+## Development Roadmap
 
-The complete transmitter–receiver system costs approximately ₹4,800, including power, RF, control, and mechanical components. This is significantly lower than commercial alternatives while offering greater educational flexibility.
+### Version 1.0
 
+* Basic NRF24 communication
+* 4-channel transmission
+* STM32 receiver integration
 
----
+### Version 2.0
 
-12. Limitations
+* OLED menu system
+* Receiver addressing
+* Configuration interface
 
-No RF encryption in the current prototype
+### Version 3.0
 
-Limited enclosure optimization
+* Telemetry support
+* Sensor feedback
+* Diagnostics
 
-Manual assembly required
+### Version 4.0
 
+* PID stabilization framework
+* Advanced control algorithms
 
-These limitations are intentional to maintain simplicity and educational transparency.
+### Version 5.0
 
-
----
-
-13. Future Scope
-
-Encrypted RF communication
-
-STM32-based transmitter
-
-Custom PCB design
-
-Advanced sensor fusion
-
-Multi-receiver and swarm control
-
-Open-source curriculum integration
-
-
+* Encrypted communication
+* Multi-node networking
+* Expanded telemetry ecosystem
 
 ---
 
-14. Conclusion
+## Learning Objectives
 
-MODCOM demonstrates that professional-grade wireless control systems can be built affordably, modularly, and safely using open-source hardware. By combining precision control, real-time embedded processing, and reusable power design, the project serves as a powerful educational platform for future engineers while remaining practical and scalable.
+This project is intended to provide practical experience in:
 
+* Embedded Systems
+* STM32 Development
+* Arduino Development
+* RF Communication
+* Control Systems
+* Sensor Integration
+* Hardware Design
+* Power Electronics
+* Telemetry Systems
+* System Architecture
+* Technical Documentation
 
 ---
 
-15. References
+## Current Status
 
-Arduino Documentation
-STM32F103 Reference Manual
-NRF24L01+ Datasheet
-MPU6050 Datasheet
-chatgpt
-gemini
+Active Development
+
+This repository documents the complete design, development, testing, and evolution of MODCOM from concept to fully functional modular communication platform.
+
+---
+
+## Author
+
+Ekansh Bhalla
+
+Computer Science Engineering Student
+
+Project Focus:
+Embedded Systems • Wireless Communication • Robotics • Telemetry • Control Systems • Product Development
